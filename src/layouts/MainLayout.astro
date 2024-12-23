@@ -1,0 +1,68 @@
+---
+import Meta from "../components/Meta.astro";
+import FooterSection from "../components/navbar&&footer/FooterSection.astro";
+import Navbar from "../components/navbar&&footer/Navbar.astro";
+import { SITE } from "../data_files/constants";
+
+const { title = SITE.title, meta, structuredData, lang = "en" } = Astro.props;
+
+// Interfaz para el tipo de props
+interface Props {
+  title?: string;
+  meta?: string;
+  structuredData?: object;
+  lang?: string;
+}
+---
+
+<!-- Esta es la estructura de inicio para la pagina --><!doctype html>
+<html lang={lang} class="scrollbar-hide lenis lenis-smooth scroll-pt-16">
+  <head>
+    <Meta meta={meta} structuredData={structuredData} />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <script is:inline>
+      // este script nos permite averiguar si se almaceno el modo dark o light
+
+      if (
+        localStorage.getItem("hs_theme") === "dark" ||
+        (!("hs_theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
+    <script>
+      import "../assets/scripts/lenisSmoothScroll";
+    </script>
+  </head>
+  <body
+    class="bg-neutral-200 selection:bg-blue-400 selection:text-neutral-700 dark:bg-neutral-800"
+  >
+    <!-- Configurando la estructura principal de la página.
+    La barra de navegación está ubicada en la parte superior, con una ranura para el contenido principal y la sección de pie de página en la parte inferior. -->
+    <div class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
+      <Navbar />
+      <main>
+        <slot />
+      </main>
+    </div>
+    <FooterSection />
+    <style>
+      /* Regla para desplazamiento de la página */
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+  </body>
+</html>

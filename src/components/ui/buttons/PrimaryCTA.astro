@@ -1,0 +1,34 @@
+---
+import Icon from "../Icon.astro";
+
+// destructuramos las propiedades de Astro.props
+const { title, url, noArrow } = Astro.props;
+
+// Definimos las interfaces de cada propiedad
+interface Props {
+  title?: string;
+  url?: string;
+  noArrow?: boolean;
+}
+
+// Definimos las clases de css para los estilos del boton
+
+const baseClasses =
+  "group inline-flex items-center justify-center gap-x-2 rounded-lg px-4 py-3 text-sm font-bold text-neutral-50 ring-zinc-500 transition duration-300 focus-visible:ring outline-none";
+
+const borderClasses = "border border-transparent";
+const bgColorClasses =
+  "bg-blue-400 hover:bg-blue-600 active:bg-blue-600 dark:focus:outline-none";
+const disableClasses = "disabled:pointer-events-none disabled:opacity-50";
+const fontSizeClasses = "2xl:text-base";
+const ringClasses = "dark:ring-zinc-200";
+---
+
+<!-- Enlace con estilo de boton con titulo dinamico url y flecha opcional -->
+<a
+  class={`${baseClasses} ${borderClasses} ${bgColorClasses} ${disableClasses} ${fontSizeClasses} ${ringClasses} `}
+  href={url}
+  >{title}
+  <!-- Mostrar la propiedad segun la flecha noArrow-->
+  {noArrow ? null : <Icon name="arrowRight" />}
+</a>
